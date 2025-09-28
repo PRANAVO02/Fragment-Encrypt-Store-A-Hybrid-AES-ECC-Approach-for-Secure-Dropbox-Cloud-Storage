@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hybrid Cloud Encryption</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container py-5">
+
+  <h2 class="mb-4">☁️ Hybrid Cloud Storage (AES + ECC)</h2>
+
+  <!-- Upload form -->
+  <form action="/upload" method="post" enctype="multipart/form-data" class="mb-4">
+    <div class="input-group">
+      <input type="file" name="file" class="form-control" required>
+      <button class="btn btn-primary" type="submit">Upload & Encrypt</button>
+    </div>
+  </form>
+
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-info">
+        {% for msg in messages %}
+          <p>{{ msg }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- File list -->
+  <h4>📂 Available Files:</h4>
+  <ul class="list-group">
+    {% for file in files %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ file }}
+        <a href="{{ url_for('download_file', filename=file) }}" class="btn btn-success btn-sm">Download & Decrypt</a>
+      </li>
+    {% else %}
+      <li class="list-group-item">No files available</li>
+    {% endfor %}
+  </ul>
+
+</body>
+</html>
